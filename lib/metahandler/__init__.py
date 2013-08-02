@@ -15,14 +15,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-This module provides a small front API for accessing some of the basic metahandler features.
+This module provides a simple API for accessing some of the basic metahandler features.
+
+Metadata collected over time with this module will be stored in the local cache.
+The local cache of metadata is kept in a local database so that it can be quickly queried while listing items in XBMC.
 
 You will likely want to use directly the metahandlers.MetaData() class for the majority of functions.
 
 eg.
     from metahandler import metahandlers
-    mh=metahandlers.MetaData()
-     
+    metadataFacade = metahandlers.MetaData()
+    metadata = metadataFacade.get_meta('movie','The Hangover',imdb_id='tt1119646')
+
+this will first try to find the entry in the cached metadata database, and if not found will try to query the online
+metadata databases (TMDB and IMDB for movies, TVDB for tv shows) to find information.
+If any metadata is found for an entry, it will be updated in the cache, so that it can get quickly found on next request
+
+
+The metacontainers module, is a utility module that allows importing metadata from a database with the same schema.
+
 '''
 
 import common
